@@ -19,7 +19,7 @@ const Register = () => {
             password
         }
         try {
-            const {data}: any = await axios.post("http://localhost:7000/api/v1/user/register", registerData, { withCredentials: true });
+            const {data}: any = await axios.post("http://localhost:7070/api/v1/user/register", registerData, { withCredentials: true });
             dispatch(userExist(data.user));
             console.log(data);
         } catch (error) {

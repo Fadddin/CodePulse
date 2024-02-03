@@ -1,53 +1,34 @@
 import ErrorHandler from "../utils/errorHandler.js";
 import catchAsyncErrors from "../middleware/catchAsyncErrors.js";
 import Pres from "../models/presModel.js";
-
-// import { spawn } from "child_process";
+import T from 'tesseract.js'
+import OpenAI from "openai";
 import fs from "fs";
-// import tesseract from "node-tesseract-ocr";
 
+const openAi = new OpenAI({
+    apiKey: "my key",
+});
 
-export const getPres = catchAsyncErrors( async (req, res, next) => {
+export const getPres = catchAsyncErrors(async (req, res, next) => {
     const data = req.body.prompt;
     let base64Image = data.split(';base64,').pop();
-    fs.writeFile('./images/image.png', base64Image, { encoding: 'base64' }, function (err) {
-        console.log('File created');
+    fs.writeFile('./images/image.png', base64Image, { encoding: 'base64' }, async function (err) {
+        if (err) {
+            return next(new ErrorHandler("Process Failed", 404))
+        }
+        let fardin  = []
+        const far = await T.recognize('./images/image.png', 'eng')
+        fardin = far.data.text.split("\n")
+        fardin.pop()
+        const mgx = `extract medicine names from this array ${fardin} and give information about them but don't mention this array in your response` 
+        const faya = await openAi.chat.completions.create({
+            model: "gpt-3.5-turbo",
+            messages: [{ role: "user", content: mgx }],
+        })
+        res.status(200).json({
+            msg: faya.choices[0].message.content,
+            meds: fardin
+        })
     });
-
-    // const config = {
-    //     lang: "eng",
-    //     oem: 1,
-    //     psm: 3,
-    // }
-
-    tesseract
-        .recognize("./image.jpg", config)
-        .then((text) => {
-            console.log("Result:", text)
-        })
-        .catch((error) => {
-            console.log(error.message)
-        })
-
-    // res.send("done")
-    // var dataToSend;
-    // const python = spawn('python', ['text_extract.py']);
-    // python.stdout.on('data', function (data) {
-    //     // console.log(data.toString())
-    //     dataToSend = data.toString();
-    // });
-    // python.on('close', () => {
-    //     // res.status(200).json({
-    //     //     msg: dataToSend
-    //     // })
-    //     res.send(dataToSend)
-    // });
-
-    // const ans = await openai.chat.completions.create({
-    //     model: "gpt-3.5-turbo",
-    //     messages: [{ role: "user", content: prompt }]
-    // })
-
-    res.send("hello")
-    // console.log(ans)
+    
 });

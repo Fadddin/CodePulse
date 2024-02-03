@@ -15,6 +15,7 @@ const Register = lazy(() => import("./pages/register"));
 const NotFound = lazy(() => import("./pages/not-found"));
 const Profile = lazy(() => import("./pages/profile"));
 const Dash = lazy(() => import ("./pages/dash"));
+// const Intro = lazy(()=> import("./components/Intro"))
 
 const App = () => {
 
@@ -26,7 +27,7 @@ const App = () => {
 
     const gotUser = async () => {
         try {
-            const { data }: any = await axios.get("http://localhost:7000/api/v1/user/me", { withCredentials: true });
+            const { data }: any = await axios.get("http://localhost:7070/api/v1/user/me", { withCredentials: true });
             dispatch(userExist(data.user));
             console.log(data)
         } catch (error: any) {

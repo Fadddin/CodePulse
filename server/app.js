@@ -5,6 +5,7 @@ import bodyParser from "body-parser";
 import cors from "cors";
 
 import user from "./routes/userRoute.js";
+import pres from "./routes/presRoute.js"
 
 const app = express();
 
@@ -28,6 +29,7 @@ app.use(bodyParser.urlencoded({ limit: "50mb", extended: true }));
 app.use(express.json({ limit: "50mb" }));
 
 app.use("/api/v1/user", user);
+app.use("/api/v1/pr", pres);
 
 app.use(ErrorMiddleware);
 

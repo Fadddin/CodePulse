@@ -17,7 +17,7 @@ const Login = () => {
             password
         }
         try {
-            const {data}: any = await axios.post("http://localhost:7000/api/v1/user/login", loginData, { withCredentials: true });
+            const {data}: any = await axios.post("http://localhost:7070/api/v1/user/login", loginData, { withCredentials: true });
             dispatch(userExist(data.user));
             console.log(data)
         } catch (error) {

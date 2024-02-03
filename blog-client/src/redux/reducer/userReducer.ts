@@ -23,4 +23,4 @@ export const userReducer = createSlice({
     },
 });
 
-export const { userExist, userNotExist, togglePaid } = userReducer.actions;
+export const { userExist, userNotExist} = userReducer.actions;
