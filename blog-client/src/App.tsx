@@ -14,8 +14,8 @@ const Login = lazy(() => import("./pages/login"));
 const Register = lazy(() => import("./pages/register"));
 const NotFound = lazy(() => import("./pages/not-found"));
 const Profile = lazy(() => import("./pages/profile"));
-const Dash = lazy(() => import ("./pages/dash"));
-// const Intro = lazy(()=> import("./components/Intro"))
+const History = lazy(() => import ("./pages/history"));
+const Particular = lazy(() => import ("./pages/particular"));
 
 const App = () => {
 
@@ -48,7 +48,7 @@ const App = () => {
                     <Header user={user} />
                     <Suspense fallback={<Loader />}>
                         <Routes>
-                            <Route path="/" element={<Home />} />
+                        <Route path="/" element={<Home user={user} />} />
                             {/* Not logged In Route */}
                             <Route
                                 path="/login"
@@ -72,7 +72,8 @@ const App = () => {
                                 element={<ProtectedRoute isAuthenticated={user ? true : false} />}
                             >
                                 <Route path="/profile" element={<Profile />} />
-                                <Route path="/dash" element={<Dash />} />
+                                <Route path="/history" element={<History />} />
+                                <Route path="/history/id" element={<Particular />} />
                             </Route>
 
                             <Route path="*" element={<NotFound />} />

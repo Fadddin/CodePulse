@@ -1,11 +1,19 @@
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
+import { User } from "../types/types";
+import Dash from '../components/dash';
 
-const Home = () => {
+interface PropsType {
+    user: User | null;
+}
+
+const Home = ({ user }: PropsType) => {
     return (
         <div>
-            Home
-            <Link to="/profile">Profile</Link>
-            <Link to="/dash">DashBoard</Link>
+            {user ? (
+                <Dash />
+            ) : (
+                <button>Login</button>
+            )}
         </div>
     )
 }

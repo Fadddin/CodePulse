@@ -9,7 +9,7 @@ interface PropsType {
     user: User | null;
 }
 
-const Header = ({ user }: PropsType,) => {
+const Header = ({ user }: PropsType) => {
 
     const dispatch = useDispatch();
 
@@ -35,12 +35,12 @@ const Header = ({ user }: PropsType,) => {
                         {
                             user ? (
                                 <div className="flex gap-4">
-                                    <p>{user.name}</p>
-                                    <button onClick={handleLogout}>Logout</button>
+                                    <p className="text-white items-center flex text-lg"><Link to="/profile">{user.name}</Link></p>
+                                    <button onClick={handleLogout} className="rounded-md bg-black text-xs uppercase text-white px-4 py-2">Logout</button>
                                 </div>
                             ) : (
                                 <div>
-                                    <button><Link to="/login">Login</Link></button>
+                                    <Link to="/login">Login</Link>
                                 </div>
                             )
                         }
@@ -49,20 +49,6 @@ const Header = ({ user }: PropsType,) => {
             </div>
             <Intro />
 
-
-            {/* <Link to="/">LOGO</Link>
-            {
-                user ? (
-                    <div>
-                        <p>{user.name}</p>
-                        <button onClick={handleLogout}>Logout</button>
-                    </div>
-                ) : (
-                    <div>
-                        <button><Link to="/login">Login</Link></button>
-                    </div>
-                )
-            } */}
         </div>
     );
 };
