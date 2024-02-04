@@ -7,7 +7,7 @@ const Dash = () => {
     const [avatarPreview, setAvatarPreview] = useState<any | null>("");
     const [respo, setRespo] = useState("");
     const [meds, setMeds] = useState([]);
-    const [loading, setLoading] = useState("");
+    const [loading, setLoading] = useState(false);
 
     const readImage = (e: any) => {
         const reader = new FileReader();
@@ -30,18 +30,18 @@ const Dash = () => {
                 prompt: avatarPreview
             }
             console.log(subData)
-            setLoading("loading...")
+            setLoading(true)
             try {
                 const { data }: any = await axios.post("http://localhost:7070/api/v1/pr/pres", subData, { withCredentials: true });
                 console.log(data)
                 if (data){
-                    setLoading("")
+                    setLoading(false)
                 }
                 setRespo(data.msg)
                 setMeds(data.meds)
             } catch (error) {
                 console.log(error)
-                setLoading("")
+                setLoading(false)
             }
         }
     }
@@ -49,7 +49,10 @@ const Dash = () => {
     return (
         <div>
             <div className='m-8'>
-                <Link to="/history">History</Link>
+                <div className=''>
+                    <Link className="bg-black text-white px-4 py-2 rounded" to="/history">History</Link>
+                </div>
+                
                 <div className='flex justify-center'>
                     <input
                         type="file"
@@ -72,7 +75,10 @@ const Dash = () => {
                         {respo}
                     </div>
                     )
-                    : loading}
+                    :( <div className='flex justify-center items-center text-xl m-10'>   
+                        {loading && (<img className='h-16' src="/Loads.svg" alt="" />)}
+                        {/* <img className='h-16' src="/Loads.svg" alt="" /> */}
+                    </div>) }
                 </div>
 
             </div>

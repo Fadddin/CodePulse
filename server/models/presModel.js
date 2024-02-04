@@ -5,9 +5,10 @@ const presSchema = new mongoose.Schema(
         name: [String],
         image: String,
         user:{
-            type: String,
+            type: mongoose.Schema.ObjectId,
             default: "user",
         },
+        info: String
     },
     {
         timestamps: true

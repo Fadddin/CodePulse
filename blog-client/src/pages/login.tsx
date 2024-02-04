@@ -38,7 +38,7 @@ const Login = () => {
                 <button type="submit">Login</button>
             </form> */}
             <div className="flex justify-center items-center">
-            <h1 className="text-3xl font-semibold mt-8 text-slate-600">REGISTER</h1>
+            <h1 className="text-3xl font-semibold mt-8 text-slate-600">SIGN IN</h1>
             </div>
             <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
             <form onSubmit={handleSubmit} className="space-y-6" method="POST">

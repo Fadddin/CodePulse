@@ -8,7 +8,7 @@ const Particular = () => {
     const [search] = useSearchParams();
     const id = search.get("id");
 
-    if (!id){
+    if (!id) {
         navigate(-1)
     }
 
@@ -38,14 +38,32 @@ const Particular = () => {
         }
     }
 
+
     return (
         <div>
-            {hisData?._id}
-            <img src={hisData?.image} alt={hisData?._id} height={200} width={150} />
-            {hisData?.name.map((he: string, index: number) => (
-                <p key={index}>{he}</p>
-            ))}
-            <button className="bg-red-500" onClick={handleDelete}>Delete this prescription data</button>
+            {hisData ? (
+                <div className="flex justify-evenly items-center">
+                    <div className="flex flex-col justify-center items-center space-y-4">
+                        <div className="text-xl font-semibold">
+                            Id : {hisData?._id}
+                        </div>
+                        <div className="text-xl">
+                            {hisData?.name}
+                        </div>
+                        <div className="text-sm w-[550px] text-center">
+                            {hisData?.info}
+                        </div>
+                        <button className="m-4 bg-red-600 px-4 py-2 rounded-lg text-white" onClick={handleDelete}>Delete Prescription</button>
+                    </div>
+                    <div>
+                        <img className="w-[500px] m-4 border-2 rounded-xl border-indigo-600" src={hisData?.image} alt={hisData?._id} height={200} width={150} />
+                    </div>
+                </div>
+            ) : (
+              <div className="flex justify-center items-center">
+                Loading
+              </div>  
+            )}
         </div>
     )
 }

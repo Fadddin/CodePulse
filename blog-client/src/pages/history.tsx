@@ -24,15 +24,16 @@ const History = () => {
     return (
         <div>
             {hisData.length>0 ? (
-                <div>
+                <div className='m-2 p-4'>
+                    <div className='text-2xl font-semibold m-2 py-4'>Prescription History</div>
                     {hisData.map((hd:any, index) => (
-                        <div key={index} onClick={() => navigate(`/history/id?id=${hd?._id}`)}>
-                            {hd?._id}
+                        <div className='m-2 p-4 border-2' key={index} onClick={() => navigate(`/history/id?id=${hd?._id}`)}>
+                           Pescription Id : {hd?._id}
                         </div>
                     ))}
                 </div>
             ) : (
-                <div>
+                <div className='m-6 text-xl font-semibold'>
                     No History Yet
                 </div>
             )}

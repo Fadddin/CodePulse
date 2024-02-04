@@ -6,7 +6,7 @@ import OpenAI from "openai";
 import fs from "fs";
 
 const openAi = new OpenAI({
-    apiKey: "no api",
+    apiKey: process.env.API_KEY,
 });
 
 export const getPres = catchAsyncErrors(async (req, res, next) => {
@@ -26,6 +26,9 @@ export const getPres = catchAsyncErrors(async (req, res, next) => {
             model: "gpt-3.5-turbo",
             messages: [{ role: "user", content: mgx }],
         })
+        if (!faya) {
+            return next(new ErrorHandler("GPT Failed", 404))
+        }
         let gaurav = [];
         gaurav= faya.choices[0].message.content
         const mgxy = `give information about the medicines from this array ${gaurav} and don't mention about this array or anything other than medicines`
@@ -33,13 +36,18 @@ export const getPres = catchAsyncErrors(async (req, res, next) => {
             model: "gpt-3.5-turbo",
             messages: [{ role: "user", content: mgxy }],
         });
+        if (!maya) {
+            return next(new ErrorHandler("GPT Failed", 404))
+        }
         const presData = await Pres.create({
             name: gaurav,
             user: req.user.id,
-            image: req.body.prompt
+            image: req.body.prompt,
+            info: maya.choices[0].message.content
         })
         res.status(200).json({
             msg: maya.choices[0].message.content,
+            presData,
             meds: gaurav
         })
     }); 
